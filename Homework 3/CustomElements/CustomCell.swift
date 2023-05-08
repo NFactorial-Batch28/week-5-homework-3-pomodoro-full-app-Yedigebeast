@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol CustomCellDelegate {
+    func textInFieldChanged(type: timeType, text: String)
+}
+
 class CustomCell: UIView {
+    
+    var text = "25:00"
+    var type = timeType.none
+    var delegate: CustomCellDelegate?
     
     //MARK: - Elements
     
@@ -49,13 +57,13 @@ class CustomCell: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(text: String, textFieldPlaceholder: String) {
+    func configure(text: String, textFieldText: String) {
         addSubview(label)
         addSubview(textField)
         addSubview(separator)
         
         label.text = text
-        textField.placeholder = textFieldPlaceholder
+        textField.text = textFieldText
         
         NSLayoutConstraint.activate([
             
@@ -70,5 +78,33 @@ class CustomCell: UIView {
             
         ])
         
+        textField.delegate = self
+        textField.addTarget(self, action: #selector(textChanging), for: .editingChanged)
     }
+}
+
+//MARK: - UI text field delegate methods
+
+extension CustomCell: UITextFieldDelegate {
+    
+    @objc private func textChanging() {
+        guard let textInField = textField.text else {return}
+        if textInField.count >= 6 {
+            text = String()
+            for i in textInField {
+                if i == ":" {
+                    continue
+                }
+                text += String(i)
+                if text.count > 4 {
+                    text.remove(at: text.startIndex)
+                }
+            }
+            text.insert(":", at: text.index(text.startIndex, offsetBy: 2))
+        }
+        textField.text = text
+        
+        delegate?.textInFieldChanged(type: type, text: text)
+    }
+    
 }

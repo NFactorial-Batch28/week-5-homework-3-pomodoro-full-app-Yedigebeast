@@ -10,8 +10,8 @@ import UIKit
 class MainViewController: UIViewController {
     
     //MARK: - Properties
-    
-    
+
+    private var timeModel = TimeModel()
     
     //MARK: - Elements
     
@@ -36,7 +36,6 @@ class MainViewController: UIViewController {
     private var timeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Constants.fonts.bold, size: 44)
-        label.text = "25:00"
         label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +45,6 @@ class MainViewController: UIViewController {
     private var currentTypeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Constants.fonts.regular, size: 16)
-        label.text = "Focus on your task"
         label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -89,6 +87,8 @@ class MainViewController: UIViewController {
         
         buttonStack.addArrangedSubview(playButton)
         buttonStack.addArrangedSubview(stopButton)
+        
+        timeModel.delegate = self
         
         view.addSubview(bgImage)
         view.addSubview(focusCategoryButton)
@@ -135,6 +135,16 @@ class MainViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if timeModel.currentTimeType == .focusTime {
+            timeLabel.text = timeModel.focusTimeCount.toString()
+            currentTypeLabel.text = "Focus on your task"
+        } else {
+            timeLabel.text = timeModel.breakTimeCount.toString()
+            currentTypeLabel.text = "Break"
+        }
+    }
+    
 }
 
 //MARK: - Buttons Pressed
@@ -146,12 +156,46 @@ extension MainViewController {
     }
     
     @objc private func playButtonPressed() {
-        print("Button pressed, start the timer")
+        if timeModel.timerState == .stopped {
+            circleProgressBarView.createCircularPath(progress: 0.0)
+            timeModel.startTheTimer()
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        } else {
+            timeModel.pauseTheTimer()
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        }
     }
     
     @objc private func stopButtonPressed() {
-        print("Button pressed, stop the timer")
+        timeModel.stopTheTimer()
+        circleProgressBarView.createCircularPath(progress: 0.0)
+        if timeModel.currentTimeType == .focusTime {
+            timeLabel.text = timeModel.focusTimeCount.toString()
+            currentTypeLabel.text = "Focus on your task"
+        } else {
+            timeLabel.text = timeModel.breakTimeCount.toString()
+            currentTypeLabel.text = "Break"
+        }
+    }
+}
+
+//MARK: - Time Model Delegate Methods
+
+extension MainViewController: TimeModelDelegate {
+    func timerEnds() {
+        if timeModel.currentTimeType == .focusTime {
+            timeLabel.text = timeModel.focusTimeCount.toString()
+            currentTypeLabel.text = "Focus on your task"
+        } else {
+            timeLabel.text = timeModel.breakTimeCount.toString()
+            currentTypeLabel.text = "Break"
+        }
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
     }
     
+    func left(portion: Double, seconds: Int) {
+        circleProgressBarView.createCircularPath(progress: portion)
+        timeLabel.text = seconds.toString()
+    }
 }
 
