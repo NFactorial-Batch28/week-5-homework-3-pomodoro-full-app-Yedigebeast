@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 class MainViewController: UIViewController {
     
     //MARK: - Properties
 
+    private var list = [Item]()
+    private var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var timeModel = TimeModel()
     
     //MARK: - Elements
@@ -136,6 +139,8 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        loadItems()
+        
         if timeModel.currentTimeType == .focusTime {
             timeLabel.text = timeModel.focusTimeCount.toString()
             currentTypeLabel.text = "Focus on your task"
@@ -176,6 +181,7 @@ extension MainViewController {
             timeLabel.text = timeModel.breakTimeCount.toString()
             currentTypeLabel.text = "Break"
         }
+        save()
     }
 }
 
@@ -191,6 +197,7 @@ extension MainViewController: TimeModelDelegate {
             currentTypeLabel.text = "Break"
         }
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        save()
     }
     
     func left(portion: Double, seconds: Int) {
@@ -199,3 +206,42 @@ extension MainViewController: TimeModelDelegate {
     }
 }
 
+//MARK: - Core Data
+
+extension MainViewController {
+    func loadItems() {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
+            
+            list = try context.fetch(request)
+            
+        } catch {
+            
+            print("Error loading companies \(error)")
+            
+        }
+    }
+    
+    func save() {
+        
+        let newItem = Item(context: context)
+        newItem.id = UUID()
+        newItem.date = Date()
+        newItem.breakTimeCount = Int64(timeModel.allBreakTime)
+        newItem.focusTimeCount = Int64(timeModel.allFocusTime)
+        timeModel.allBreakTime = 0
+        timeModel.allFocusTime = 0
+        list.append(newItem)
+        
+        do {
+            
+            try context.save()
+            
+        } catch {
+            
+            print("Error saving context \(error)")
+            
+        }
+    }
+}

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		520634A80EA08230B797CB07 /* Pods_Homework_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D8C6A52A5D66FE617C8A0C /* Pods_Homework_3.framework */; };
 		FE491F992A08FDD700D7B11D /* TimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE491F982A08FDD700D7B11D /* TimeModel.swift */; };
+		FE491F9C2A091D5C00D7B11D /* pomodoro.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE491F9A2A091D5C00D7B11D /* pomodoro.xcdatamodeld */; };
 		FEC0B2792A07D3410020E634 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC0B2782A07D3410020E634 /* AppDelegate.swift */; };
 		FEC0B27B2A07D3410020E634 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC0B27A2A07D3410020E634 /* SceneDelegate.swift */; };
 		FEC0B27D2A07D3410020E634 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC0B27C2A07D3410020E634 /* MainViewController.swift */; };
@@ -33,6 +34,7 @@
 		B8A62991562A8C289E8CC6BA /* Pods-Homework 3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Homework 3.release.xcconfig"; path = "Target Support Files/Pods-Homework 3/Pods-Homework 3.release.xcconfig"; sourceTree = "<group>"; };
 		F7B1F03FFB6BE9F8D01602C1 /* Pods-Homework 3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Homework 3.debug.xcconfig"; path = "Target Support Files/Pods-Homework 3/Pods-Homework 3.debug.xcconfig"; sourceTree = "<group>"; };
 		FE491F982A08FDD700D7B11D /* TimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeModel.swift; sourceTree = "<group>"; };
+		FE491F9B2A091D5C00D7B11D /* pomodoro.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pomodoro.xcdatamodel; sourceTree = "<group>"; };
 		FEC0B2752A07D3410020E634 /* Homework 3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Homework 3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC0B2782A07D3410020E634 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC0B27A2A07D3410020E634 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		FE491F972A08FDC800D7B11D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FE491F9A2A091D5C00D7B11D /* pomodoro.xcdatamodeld */,
 				FE491F982A08FDD700D7B11D /* TimeModel.swift */,
 			);
 			name = Models;
@@ -288,6 +291,7 @@
 				FEC0B29D2A07DC400020E634 /* CircleProgressBar.swift in Sources */,
 				FEC0B29B2A07D6330020E634 /* Constants.swift in Sources */,
 				FEC0B2A52A07E9560020E634 /* HistoryViewController.swift in Sources */,
+				FE491F9C2A091D5C00D7B11D /* pomodoro.xcdatamodeld in Sources */,
 				FEC0B27D2A07D3410020E634 /* MainViewController.swift in Sources */,
 				FE491F992A08FDD700D7B11D /* TimeModel.swift in Sources */,
 				FEC0B2832A07D3410020E634 /* Homework_3.xcdatamodeld in Sources */,
@@ -508,6 +512,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		FE491F9A2A091D5C00D7B11D /* pomodoro.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FE491F9B2A091D5C00D7B11D /* pomodoro.xcdatamodel */,
+			);
+			currentVersion = FE491F9B2A091D5C00D7B11D /* pomodoro.xcdatamodel */;
+			path = pomodoro.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		FEC0B2812A07D3410020E634 /* Homework_3.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

@@ -41,6 +41,14 @@ class CustomCell: UIView {
         return textField
     }()
     
+    private var label1: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont(name: Constants.fonts.regular, size: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private var separator: UIImageView = {
        let image = UIImageView()
         image.image = UIImage(named: "separator")
@@ -81,6 +89,29 @@ class CustomCell: UIView {
         textField.delegate = self
         textField.addTarget(self, action: #selector(textChanging), for: .editingChanged)
     }
+    
+    func configure(text: String, text1: String) {
+        addSubview(label)
+        addSubview(label1)
+        addSubview(separator)
+        
+        label.text = text
+        label1.text = text1
+        
+        NSLayoutConstraint.activate([
+            
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            
+            label1.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label1.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            
+            separator.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 16)
+            
+        ])
+    }
+    
 }
 
 //MARK: - UI text field delegate methods

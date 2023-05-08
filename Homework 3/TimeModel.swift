@@ -72,6 +72,8 @@ class TimeModel {
     var secondsPassed = 0
     var timerState = timeState.stopped
     var timer: Timer?
+    var allFocusTime = 0
+    var allBreakTime = 0
     
     func startTheTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -86,6 +88,7 @@ class TimeModel {
             if self.secondsPassed == self.focusTimeCount {
                 timerState = .stopped
                 timer.invalidate()
+                allFocusTime += secondsPassed
                 secondsPassed = 0
                 currentTimeType = .breakTime
                 delegate?.timerEnds()
@@ -96,6 +99,7 @@ class TimeModel {
             if self.secondsPassed == self.breakTimeCount {
                 timerState = .stopped
                 timer.invalidate()
+                allBreakTime += secondsPassed
                 secondsPassed = 0
                 currentTimeType = .focusTime
                 delegate?.timerEnds()
@@ -111,6 +115,11 @@ class TimeModel {
     
     func stopTheTimer() {
         timer?.invalidate()
+        if currentTimeType == .focusTime {
+            allFocusTime += secondsPassed
+        } else {
+            allBreakTime += secondsPassed
+        }
         secondsPassed = 0
     }
     
